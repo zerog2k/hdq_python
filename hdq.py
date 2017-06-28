@@ -38,12 +38,14 @@ def write_byte(byte):
     if args.debug:
         print "sending:", binascii.hexlify(buf)
     ser.write(buf)
+    # chew echoed bytes
     ser.read(8)
 
 def read_byte():
     #read and convert 8 data bits
     buf = ser.read(8)
     buf = bytearray(buf)
+    # lsb first, so reverse:
     buf.reverse()
     if args.debug:
         print "recv buf:", binascii.hexlify(buf)
