@@ -56,14 +56,18 @@ def read_byte():
             byte = byte | 1       
     return byte
 
-def write_read(byte):
-    write_byte(byte)
-    return read_byte()
-
 def uint16le(bl, bh):
     word = bh << 8 | bl
     return word
 
+def read_reg(reg):
+    write_byte(reg)
+    return read_byte()
+
+def write_reg(reg, byte):
+    write_byte(0x80 | reg)
+    write_byte(byte)
+ 
 #main
 reset()
 
@@ -73,8 +77,8 @@ if args.file:
         print "%24s %8s %6s %6s %s" % ("name","short", "hex", "dec", "unit")
         for row in reader:
             regs = row["regaddrs"].split('/')
-            byte_low = write_read(int(regs[0],16))
-            byte_high = write_read(int(regs[1],16))
+            byte_low = read_reg(int(regs[0],16))
+            byte_high = read_reg(int(regs[1],16))
             value = uint16le(byte_low, byte_high)
             name = row["name"]
             shortname = row["shortname"]
@@ -82,12 +86,12 @@ if args.file:
             print "%24s %8s 0x%04X %6d %s" % (name, shortname, value, value, unit)
             
 else:
-    #demo of Voltage() [0x08/0x09]
-    print "demo..."
-    write_byte(0x08)
-    b1 = read_byte()
-    write_byte(0x09)
-    b2 = read_byte()
+    #demo
+    print "get DEVICE_TYPE..."
+    write_reg(0x00, 0x01)
+    write_reg(0x01, 0x00)
+    b1 = read_reg(0x00)
+    b2 = read_reg(0x01)
     value = uint16le(b1,b2)
-    print "Voltage(): 0x%02X, %d (mV)" % (value,value)
+    print "value: 0x%04X" % value
 

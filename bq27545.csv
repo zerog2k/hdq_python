@@ -1,5 +1,4 @@
 name, shortname, regaddrs, unit, access
-Control(),CNTL,0x00/0x01,N/A,R/W
 AtRate(),AR,0x02/0x03,mA,R/W
 UnfilteredSOC(),UFSOC,0x04/0x05,%,R
 Temperature(),TEMP,0x06/0x07,0.1K,R
