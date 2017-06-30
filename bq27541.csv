@@ -1,0 +1,22 @@
+name, shortname, regaddrs, unit, access
+AtRate(),AR,0x02/0x03,mA,R/W
+AtRateTimeToEmpty(),ARTTE, 0x04/0x05,Minutes,R
+Temperature(),TEMP,0x06/0x07,0.1K,R
+Voltage(),VOLT,0x08/0x09,mV,R
+Flags(),FLAGS,0x0A/0x0B,N/A,R
+NomAvailableCapacity(),NAC,0x0C/0x0D,mAh,R
+FullAvailableCapacity(),FAC,0x0E/0x0F,mAh,R
+RemainingCapacity(),RM,0x10/0x11,mAh,R
+FullChargeCapacity(),FCC,0x12/0x13,mAh,R
+AverageCurrent(),AI,0x14/0x15,mA,R
+TimeToEmpty(),TTE,0x16/0x17,Minutes,R
+TimeToFull(),TTF,0x18/0x19,Minutes,R
+StandbyCurrent(),SI,0x1A/0x1B,mA,R
+StandbyTimeToEmpty(),STTE,0x1C/0x1D,Minutes,R
+MaxLoadCurrent(),MLI,0x1E/0x1F,mA,R
+MaxLoadTimeToEmpty(),MLTTE,0x20/0x21,Minutes,R
+AvailableEnergy(),AE,0x22/0x23,10mWhr,R
+AveragePower(),AP,0x24/0x25,mW/cW,R
+TTEatConstantPower(),TTECP,0x26/0x27,Minutes,R
+CycleCount(),CC,0x2A/0x2B,Counts,R
+StateOfCharge(),SOC,0x2C/0x2D,%,R
