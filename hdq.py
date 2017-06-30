@@ -8,6 +8,7 @@ import serial
 import argparse
 import binascii
 import csv
+import ctypes
 
 ap = argparse.ArgumentParser()
 ap.add_argument("port")
@@ -83,11 +84,12 @@ if args.file:
             name = row["name"]
             shortname = row["shortname"]
             unit = row["unit"]
-            print "%24s %8s 0x%04X %6d %s" % (name, shortname, value, value, unit)
+            value_int16 = ctypes.c_int16(value).value
+            print "%24s %8s 0x%04X %6d %s" % (name, shortname, value, value_int16, unit)
             
 else:
     #demo
-    print "get DEVICE_TYPE..."
+    print "sendng Control() get DEVICE_TYPE (0x0001)..."
     write_reg(0x00, 0x01)
     write_reg(0x01, 0x00)
     b1 = read_reg(0x00)
