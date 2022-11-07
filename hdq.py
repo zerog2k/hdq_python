@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 # hdq over uart implementation
 # based on http://www.ti.com/lit/an/slua408a/slua408a.pdf
@@ -37,7 +37,7 @@ def write_byte(byte):
                 buf.append(HDQ_BIT0)
         byte = byte >> 1
     if args.debug:
-        print "sending:", binascii.hexlify(buf)
+        print("sending:", binascii.hexlify(buf))
     ser.write(buf)
     # chew echoed bytes
     ser.read(8)
@@ -49,7 +49,7 @@ def read_byte():
     # lsb first, so reverse:
     buf.reverse()
     if args.debug:
-        print "recv buf:", binascii.hexlify(buf)
+        print("recv buf:", binascii.hexlify(buf))
     byte = 0
     for i in range(8):
         byte = byte << 1
@@ -75,7 +75,7 @@ reset()
 if args.file:
     with open(args.file) as csvfile:
         reader = csv.DictReader(csvfile, skipinitialspace=True)
-        print "%24s %8s %6s %6s %s" % ("name","short", "hex", "dec", "unit")
+        print("%24s %8s %6s %6s %s" % ("name","short", "hex", "dec", "unit"))
         for row in reader:
             regs = row["regaddrs"].split('/')
             byte_low = read_reg(int(regs[0],16))
@@ -85,15 +85,14 @@ if args.file:
             shortname = row["shortname"]
             unit = row["unit"]
             value_int16 = ctypes.c_int16(value).value
-            print "%24s %8s 0x%04X %6d %s" % (name, shortname, value, value_int16, unit)
+            print("%24s %8s 0x%04X %6d %s" % (name, shortname, value, value_int16, unit))
             
 else:
     #demo
-    print "sendng Control() get DEVICE_TYPE (0x0001)..."
+    print("sendng Control() get DEVICE_TYPE (0x0001)...")
     write_reg(0x00, 0x01)
     write_reg(0x01, 0x00)
     b1 = read_reg(0x00)
     b2 = read_reg(0x01)
     value = uint16le(b1,b2)
-    print "value: 0x%04X" % value
-
+    print("value: 0x%04X" % value)
